@@ -1,6 +1,6 @@
-const calculator= require('./calculator');
+const add = require('./calculator');
 
 
-test('should return... ', () => {
+it('should return 0 from a string 0 ', () => {
     expect(add('0')).toBe(0);
 });
