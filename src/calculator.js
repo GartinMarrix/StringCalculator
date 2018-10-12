@@ -15,6 +15,7 @@ function add(numbers) {
 
 
 function multipleNumbers(numbersArray) {
+    //test for negative numbers then call sum
     try { 
         testForNegative(numbersArray) 
     }
@@ -24,15 +25,19 @@ function multipleNumbers(numbersArray) {
 
     return sum(numbersArray);
 }
-function singleNumber(numbers) {
+function singleNumber(number) {
+    //test for negative numbers then return number
+    if(parseInt(number) > 1000) {
+        return '';
+    }
     try { 
-        testForNegative(numbers) 
+        testForNegative(number) 
     }
     catch(err) {
         return 'Negatives not allowed: ' + err;
     }
 
-    return parseInt(numbers);
+    return parseInt(number);
 }
 
 
@@ -42,16 +47,20 @@ function sum(numbersArray) {
     var total = 0;
     var tmpArray = [];
 
-    //add the numbers to total, subloop for \n character
+    //add the numbers to total, subloop if index includes \n
     for(var i=0; i < numbersArray.length; i++) {
         if(numbersArray[i].includes('\n')) {
             tmpArray = numbersArray[i].split('\n');
             for(var j=0; j < tmpArray.length; j++) {
-                total += parseInt(tmpArray[j]);
+                if(parseInt(numbersArray[j]) <= 1000) {
+                    total += parseInt(tmpArray[j]);
+                }
             }
         }
         else {
-            total += parseInt(numbersArray[i]);
+            if(parseInt(numbersArray[i]) <= 1000) {
+                total += parseInt(numbersArray[i]);
+            }
         }
     }
     return total;
