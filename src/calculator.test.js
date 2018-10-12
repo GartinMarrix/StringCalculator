@@ -12,3 +12,7 @@ it('should return a single number from when string contains a single number', ()
 it('should return sum of two numbers', () => {
     expect(add('1,2')).toBe(3);
 });
+
+it('should return sum of multiple numbers', () => {
+    expect(add('1,2,3')).toBe(6);
+});
