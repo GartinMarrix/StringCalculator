@@ -25,11 +25,36 @@ it('should return sum of numbers seperated by comma and or by newline', () => {
     expect(add('1 \n2 \n3 \n4,5,6 \n7,8,9')).toBe(45);
 });
 
+
 // 4
 it('should return an exception for negative numbers, listing the negatives', () => {
     expect(add('1,-2,-3')).toBe('Negatives not allowed: -2,-3');
 });
+
+it('should return an exception for negative numbers, listing the negatives', () => {
+    expect(add('-2')).toBe('Negatives not allowed: -2');
+});
+
+it('should return an exception for negative numbers, listing the negatives', () => {
+    expect(add('1,-2 \n-3')).toBe('Negatives not allowed: -2,-3');
+});
+
+
 // 5
 it('should ignore numbers above thousand', () => {
     expect(add('1001,2')).toBe(2);
+});
+
+it('should ignore numbers above thousand', () => {
+    expect(add('1001,2 \n1002,4')).toBe(6);
+});
+
+
+// 6
+it('should return a string seperated by a custom delimiter', () => {
+    expect(add('//;\n1;2')).toBe(3);
+});
+
+it('should return a string seperated by a custom delimiter', () => {
+    expect(add('//;\n1;2 \n3,4,5,6;7 \n8;9')).toBe(45);
 });

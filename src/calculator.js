@@ -4,8 +4,17 @@ function add(numbers) {
     }
 
     if(numbers.includes(',') || numbers.includes('\n')) {
-        var numbersArray = numbers.split(',');
-        return multipleNumbers(numbersArray);
+        var numbersArray = numbers.split(/[\n,]+/);
+        var delimiter = '&';
+
+        //if the string has a custom delimiter
+        if(numbers.includes('//')) {
+            delimiter = numbers[2];
+            var substr = numbers.substring(4);
+            numbersArray = substr.split(/[\n,]+/);
+        }
+
+        return multipleNumbers(numbersArray, delimiter);
 
     }
     else {
@@ -14,7 +23,8 @@ function add(numbers) {
 }
 
 
-function multipleNumbers(numbersArray) {
+
+function multipleNumbers(numbersArray, delimiter) {
     //test for negative numbers then call sum
     try { 
         testForNegative(numbersArray) 
@@ -23,7 +33,7 @@ function multipleNumbers(numbersArray) {
         return 'Negatives not allowed: ' + err;
     }
 
-    return sum(numbersArray);
+    return sum(numbersArray, delimiter);
 }
 function singleNumber(number) {
     //test for negative numbers then return number
@@ -43,17 +53,19 @@ function singleNumber(number) {
 
 
 
-function sum(numbersArray) {
+
+function sum(numbersArray, delimiter) {
     var total = 0;
     var tmpArray = [];
 
-    //add the numbers to total, subloop if index includes \n
+    //add the numbers to total
+    //subloop if index includes the custom delimiter
     for(var i=0; i < numbersArray.length; i++) {
-        if(numbersArray[i].includes('\n')) {
-            tmpArray = numbersArray[i].split('\n');
-            for(var j=0; j < tmpArray.length; j++) {
-                if(parseInt(numbersArray[j]) <= 1000) {
-                    total += parseInt(tmpArray[j]);
+        if(numbersArray[i].includes(delimiter)) {
+            tmpArray = numbersArray[i].split(delimiter);
+            for(var k=0; k < tmpArray.length; k++) {
+                if(parseInt(tmpArray[k]) <= 1000) {
+                    total += parseInt(tmpArray[k]);
                 }
             }
         }
@@ -67,7 +79,7 @@ function sum(numbersArray) {
 }
 
 function testForNegative(numbersArray) {
-    //if only a sigle number
+    //if only a single number
     if(!numbersArray.includes(',')) {
         if(parseInt(numbersArray) < 0) {
             throw numbersArray;
@@ -81,7 +93,7 @@ function testForNegative(numbersArray) {
     for(var i=0; i < numbersArray.length; i++) {
         if(parseInt(numbersArray[i]) < 0) {
             includesNegative = true;
-            negativeArray.push(numbersArray[i]);
+            negativeArray.push(parseInt(numbersArray[i]));
         }
     }
     if(includesNegative) {
